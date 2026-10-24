@@ -107,7 +107,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-        // USING REDIRECT INSTEAD OF POPUP TO FIX MOBILE BROWSER ERROR
+        // USING REDIRECT INSTEAD OF POPUP TO FIX ERROR
         import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, setDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
@@ -127,6 +127,9 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
+        
+        // YEH LINE HAMESHA ACCOUNT CHOOSE KARNE KA PUCHEGI (AUTO-LOGIN FIX)
+        provider.setCustomParameters({ prompt: 'select_account' });
 
         let currentUser = null;
         let activeAdminChatUid = null;
@@ -137,12 +140,12 @@
             document.getElementById(screenId).classList.add('active');
         }
 
-        // CATCH REDIRECT ERRORS JUST IN CASE
+        // CATCH REDIRECT ERRORS
         getRedirectResult(auth).catch((error) => {
             alert("System Error: " + error.message);
         });
 
-        // FIXED LOGIN: REDIRECT METHOD FOR MOBILE
+        // SAFE MOBILE LOGIN
         document.getElementById('loginBtn').addEventListener('click', () => {
             document.getElementById('loginBtn').innerText = "> CONNECTING...";
             signInWithRedirect(auth, provider);
@@ -269,18 +272,4 @@
         setInterval(drawMatrix, 40);
     </script>
 </body>
-</html>- 👋 Hi, I’m @Brandxhacks316
-- 👀 I’m interested in ...
-- 🌱 I’m currently learning ...
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
-
-<!---
-Brandxhacks316/Brandxhacks316 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
-Revenge
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
+</html>
